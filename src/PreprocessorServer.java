@@ -25,6 +25,7 @@ public class PreprocessorServer {
 	public static final String csvFile="C:\\Users\\Steve\\Documents\\Eclipse Projects\\testapplication\\data\\sample.csv";
 	public static final String esnFile="C:\\Users\\Steve\\Documents\\Eclipse Projects\\testapplication\\data\\esn.csv";
 	
+	private int nr;
 	
 	public static void main(String[] args) {
 	 	PreprocessorServer server = new PreprocessorServer();
@@ -45,7 +46,7 @@ public class PreprocessorServer {
 		System.out.println("Enter file name");
 		String name = keyboard.nextLine();
 		String date = getCurrentTimeStamp();
-		String file = "C:\\Users\\Steve\\Documents\\Eclipse Projects\\RapidMinerJavaProject\\data\\"+date+"-"+name+".csv";
+		String file = "C:\\Users\\Steve\\Documents\\Eclipse Projects\\BA_Server\\data\\"+date+"-"+name+".csv";
 		
 		
 		key = new KeyboardInput();
@@ -53,9 +54,9 @@ public class PreprocessorServer {
 	 	try {
 	 		File yourFile = new File(file);
 	 		yourFile.createNewFile();
-	 		
 	 		out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
-	 			
+			out.println("nr,fusedX,fusedY,fusedZ,gyroX,gyroY,gyroZ,accX,accY,accZ,q,w,e,r,t,z,u,i,o,p,a,s,d,f,g,h,j,k,l,y");
+			out.flush();
 	 		java.net.ServerSocket serverSocket = new java.net.ServerSocket(port);
 			
 	 		System.out.println("Server up and running on port: "+port);
@@ -141,11 +142,12 @@ public class PreprocessorServer {
 	public void writeToCSVFile( String msg){
 		if(msg!=null){
 			
-			msg = msg + ";"+key.getStateAsString();
+			msg = nr+","+msg + ";"+key.getStateAsString();
 			msg = msg.replace(';', ',');
 			out.println(msg);
 			out.flush();
 			System.out.println(msg);
+			nr++;
 		}else{
 			System.out.println("null message sent");
 		}

@@ -196,7 +196,7 @@ public class KeyboardInput extends JFrame {
 		st = appendByBool(st, y);
 		st = appendByBool(st, error);
 		
-		
+		st = st.substring(0, st.length()-1);
 		
 		
 		return st;
